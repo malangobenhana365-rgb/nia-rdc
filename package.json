@@ -1,8 +1,11 @@
-nia-rdc/
-├── backend/
-│   ├── package.json (ou requirements.txt)
-│   └── index.js / server.js (ou main.py)
-├── frontend/
-│   ├── index.html
-│   └── package.json (ou fichiers source)
-└── README.md
+{
+  "name": "nia-rdc-backend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
