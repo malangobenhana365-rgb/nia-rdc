@@ -1,0 +1,8 @@
+nia-rdc/
+├── backend/
+│   ├── package.json (ou requirements.txt)
+│   └── index.js / server.js (ou main.py)
+├── frontend/
+│   ├── index.html
+│   └── package.json (ou fichiers source)
+└── README.md
