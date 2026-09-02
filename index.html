@@ -54,6 +54,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
     }
 
     .onboarding-content {
@@ -471,7 +472,7 @@
   <!-- Écran d'accueil plein écran (Splash / Onboarding) -->
   <div id="onboarding-screen" class="onboarding-overlay">
     <div class="onboarding-content">
-      <img src="./votre-image.jpg" alt="Bienvenue sur NIA RDC" class="onboarding-image">
+      <img src="1000007453.png" alt="Bienvenue sur NIA RDC" class="onboarding-image">
       <div class="onboarding-footer">
         <button id="btn-next-onboarding" class="btn-onboarding" onclick="fermerOnboarding()">Suivant</button>
       </div>
@@ -743,6 +744,20 @@
     <div style="font-size:1.3rem; font-weight:800; text-align:center; letter-spacing:0.5px;">Balayez vers le haut</div>
     <div style="font-size:0.9rem; color:var(--text-light); text-align:center; padding:0 32px;">Glissez votre doigt du bas vers le haut<br>pour accéder à l'administration</div>
   </div>
+
+  <script>
+    /* Fonction de fermeture de l'écran d'accueil */
+    function fermerOnboarding() {
+      const screen = document.getElementById('onboarding-screen');
+      if (screen) {
+        screen.style.opacity = '0';
+        screen.style.visibility = 'hidden';
+        setTimeout(() => {
+          screen.style.display = 'none';
+        }, 400);
+      }
+    }
+  </script>
 
   <script src="./app.js"></script>
 </body>
