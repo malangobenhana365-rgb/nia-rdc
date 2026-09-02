@@ -41,6 +41,65 @@
       display: flex; flex-direction: column; min-height: 100vh;
     }
 
+    /* ---- ÉCRAN D'ACCUEIL (SPLASH / ONBOARDING) ---- */
+    .onboarding-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #060c1a;
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .onboarding-content {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .onboarding-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .onboarding-footer {
+      position: absolute;
+      bottom: 40px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      padding: 0 20px;
+    }
+
+    .btn-onboarding {
+      width: 100%;
+      max-width: 320px;
+      padding: 16px 24px;
+      background: var(--gold-gradient);
+      color: #060c1a;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      transition: transform 0.2s ease;
+    }
+
+    .btn-onboarding:active {
+      transform: scale(0.98);
+    }
+
     /* ---- HEADER ---- */
     header {
       background: linear-gradient(180deg, #0a1222 0%, #060c1a 100%);
@@ -408,6 +467,17 @@
   </style>
 </head>
 <body>
+
+  <!-- Écran d'accueil plein écran (Splash / Onboarding) -->
+  <div id="onboarding-screen" class="onboarding-overlay">
+    <div class="onboarding-content">
+      <img src="./votre-image.jpg" alt="Bienvenue sur NIA RDC" class="onboarding-image">
+      <div class="onboarding-footer">
+        <button id="btn-next-onboarding" class="btn-onboarding" onclick="fermerOnboarding()">Suivant</button>
+      </div>
+    </div>
+  </div>
+
   <header>
     <div class="header-main-controls">
       <div class="menu-burger-container">
@@ -493,6 +563,7 @@
       <small>Admin</small>
     </button>
   </nav>
+
   <div class="modal" id="modal-admin-access">
     <div class="modal-content" style="max-width:380px;">
       <div class="modal-header">
