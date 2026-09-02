@@ -63,6 +63,8 @@
       height: 100%;
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 
     .onboarding-image {
@@ -70,6 +72,22 @@
       height: 100%;
       object-fit: cover;
       object-position: center;
+    }
+
+    .onboarding-title {
+      font-size: 2.2rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+
+    .onboarding-subtitle {
+      font-size: 1rem;
+      color: var(--text-light);
+      margin-bottom: 30px;
     }
 
     .onboarding-footer {
@@ -472,7 +490,8 @@
   <!-- Écran d'accueil plein écran (Splash / Onboarding) -->
   <div id="onboarding-screen" class="onboarding-overlay">
     <div class="onboarding-content">
-      <img src="1000007453.png" alt="Bienvenue sur NIA RDC" class="onboarding-image">
+      <div class="onboarding-title">NIA RDC</div>
+      <div class="onboarding-subtitle">Solutions Intelligentes</div>
       <div class="onboarding-footer">
         <button id="btn-next-onboarding" class="btn-onboarding" onclick="fermerOnboarding()">Suivant</button>
       </div>
