@@ -56,6 +56,60 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(express.static(__dirname));
 
+// ─── PAGE D'ACCUEIL : AFFICHAGE PROPRE NIA RDC ─────────────────────────────
+app.get("/", (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Bienvenue sur NIA RDC</title>
+      <style>
+        body {
+          margin: 0;
+          padding: 0;
+          background-color: #0d1117;
+          color: #ffffff;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          text-align: center;
+        }
+        .container {
+          padding: 20px;
+        }
+        .logo {
+          font-size: 3em;
+          font-weight: bold;
+          color: #f1c40f;
+          margin-bottom: 10px;
+        }
+        .status {
+          background-color: #238636;
+          color: white;
+          padding: 8px 16px;
+          border-radius: 20px;
+          display: inline-block;
+          font-size: 0.9em;
+          margin-bottom: 20px;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="logo">NIA RDC</div>
+        <div class="status">✓ Service Backend Opérationnel</div>
+        <p>Le serveur fonctionne parfaitement.</p>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
 // ─── FILTRAGE DE CONTENU ────────────────────────────────────────────────────
 
 // Mots liés à l'immobilier – interdits sur cette plateforme
