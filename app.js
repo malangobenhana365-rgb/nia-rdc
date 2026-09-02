@@ -1,3 +1,16 @@
+// ====================================================
+// GESTION DE L'ÉCRAN D'ACCUEIL (ONBOARDING / SPLASH)
+// ====================================================
+function fermerOnboarding() {
+  const onboardingScreen = document.getElementById('onboarding-screen');
+  if (onboardingScreen) {
+    onboardingScreen.style.display = 'none';
+  }
+}
+
+// ====================================================
+// CONFIGURATION ET VARIABLES GLOBALES
+// ====================================================
 const API = "https://nia-rdc-1k3x.onrender.com";
 
 let toutesLesAnnonces = [];
@@ -208,7 +221,6 @@ function verifierContenuInterdits(titre, description) {
   }
   return null;
 }
-
 
 function brancherEvenementScrollControle() {
   const box = document.getElementById("cgu-scroller-node");
