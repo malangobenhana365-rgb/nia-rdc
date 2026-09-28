@@ -336,7 +336,6 @@ async function soumettreAnnonceStandard() {
   const titre = document.getElementById("titre").value.trim();
   const prix = document.getElementById("prix").value.trim();
   const devise = document.getElementById("devise").value;
-  const periode = document.getElementById("periode").value;
   const statut = document.getElementById("statut").value;
   const telephone = document.getElementById("telephone").value.trim();
   const description = document.getElementById("description").value.trim();
@@ -358,7 +357,6 @@ async function soumettreAnnonceStandard() {
       titre,
       prix,
       devise,
-      periode,
       statut,
       telephone,
       description,
@@ -514,7 +512,7 @@ function rendreFluxHtml(liste) {
       <div class="${a.is_vip ? "annonce-card vip-premium" : "annonce-card"}">
         ${a.is_vip ? `<div class="badge-vip">👑 VIP EXPRESS</div>` : ""}
         <h3>${echapperHtml(a.titre || "")}</h3>
-        <div class="price-tag">${Number(a.prix || 0)} ${echapperHtml(a.devise || "$")} <span style="font-size:0.8rem; font-weight:normal; color:var(--text-light)">/ ${echapperHtml(a.periode || "jour")}</span></div>
+        <div class="price-tag">${Number(a.prix || 0)} ${echapperHtml(a.devise || "$")}</div>
         <div style="font-size:0.8rem; color:var(--text-light); margin-bottom:8px;">📍 ${echapperHtml(a.ville || "")} ${a.commune ? '· ' + echapperHtml(a.commune) : ''}</div>
         ${descriptionMarkup}
         ${imagesMarkup}
@@ -732,7 +730,6 @@ function ouvrirFenetreModificationAnnonce(a) {
   document.getElementById("edit-titre").value = a.titre;
   document.getElementById("edit-prix").value = a.prix;
   document.getElementById("edit-devise").value = a.devise;
-  document.getElementById("edit-periode").value = a.periode;
   document.getElementById("edit-statut").value = a.statut;
   document.getElementById("edit-telephone").value = a.telephone;
   document.getElementById("edit-description").value = a.description || "";
@@ -816,7 +813,6 @@ async function sauvegarderChangementsAnnonce() {
       titre,
       prix: document.getElementById("edit-prix").value,
       devise: document.getElementById("edit-devise").value,
-      periode: document.getElementById("edit-periode").value,
       statut: document.getElementById("edit-statut").value,
       telephone: document.getElementById("edit-telephone").value,
       description,
@@ -948,10 +944,7 @@ function ajouterBlocObjetAuCatalogueVip() {
   row.innerHTML = `
     <div style="font-weight:800; font-size:0.85rem; color:#f59e0b; border-bottom:1px solid #fde68a; padding-bottom:6px; margin-bottom:2px;">🏠 Logement VIP #${BLOCS_VIP_COMPTEUR}</div>
     <div class="form-box" style="display:flex; flex-direction:column; gap:4px;"><label style="font-size:0.78rem; font-weight:600; color:#64748b;">Titre *</label><input class="vip-in-titre" placeholder="Ex : Studio lumineux près du centre"></div>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-      <div class="form-box" style="display:flex; flex-direction:column; gap:4px;"><label style="font-size:0.78rem; font-weight:600; color:#64748b;">Prix</label><input class="vip-in-prix" type="number" placeholder="150"></div>
-      <div class="form-box" style="display:flex; flex-direction:column; gap:4px;"><label style="font-size:0.78rem; font-weight:600; color:#64748b;">Période</label><select class="vip-in-periode"><option value="jour">/ Jour</option><option value="semaine">/ Semaine</option><option value="mois">/ Mois</option></select></div>
-    </div>
+    <div class="form-box" style="display:flex; flex-direction:column; gap:4px;"><label style="font-size:0.78rem; font-weight:600; color:#64748b;">Prix</label><input class="vip-in-prix" type="number" placeholder="150"></div>
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
       <div class="form-box" style="display:flex; flex-direction:column; gap:4px;"><label style="font-size:0.78rem; font-weight:600; color:#64748b;">Ville</label><input class="vip-in-ville" value="Lubumbashi"></div>
       <div class="form-box" style="display:flex; flex-direction:column; gap:4px;"><label style="font-size:0.78rem; font-weight:600; color:#64748b;">Commune</label><input class="vip-in-commune" placeholder="Ex: Kenya"></div>
@@ -985,7 +978,6 @@ async function sauvegarderEtPublierToutLeCatalogueVip() {
         titre,
         prix: n.querySelector(".vip-in-prix").value || 0,
         devise: "$",
-        periode: n.querySelector(".vip-in-periode").value,
         statut: n.querySelector(".vip-in-statut").value,
         telephone: localStorage.getItem("nia_user_tel"),
         description: descVal,

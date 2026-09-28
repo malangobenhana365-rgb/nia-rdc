@@ -86,6 +86,7 @@ async function preparerUnivers() {
     await pool.query(`ALTER TABLE annonces ADD COLUMN IF NOT EXISTS etat_objet VARCHAR(40)`);
     await pool.query(`ALTER TABLE annonces ADD COLUMN IF NOT EXISTS avenue TEXT`);
     await pool.query(`ALTER TABLE annonces ADD COLUMN IF NOT EXISTS numero_parcelle TEXT`);
+    await pool.query(`ALTER TABLE annonces DROP COLUMN IF EXISTS periode`);
     await pool.query(`CREATE INDEX IF NOT EXISTS annonces_univers_idx ON annonces(univers)`);
     console.log("✅ Séparation des univers prête.");
   } catch (error) {
@@ -167,7 +168,7 @@ app.get("/marketplace/feed", async (req, res) => {
 
 app.post("/annonces", annonceLimiter, async (req, res) => {
   try {
-    let { user_id, titre, description, prix, devise, periode, ville, commune, quartier, telephone, statut, is_vip, images_base64 } = req.body;
+    let { user_id, titre, description, prix, devise, ville, commune, quartier, telephone, statut, is_vip, images_base64 } = req.body;
 
     const violation = detecterMotsInterdits(titre, description);
     if (violation) {
@@ -178,9 +179,9 @@ app.post("/annonces", annonceLimiter, async (req, res) => {
     }
 
     const fields = await pool.query(
-      `INSERT INTO annonces (user_id, titre, description, prix, devise, periode, ville, commune, quartier, telephone, statut, is_vip, univers, created_at)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, 'location', NOW()) RETURNING id`,
-      [user_id || null, titre, description, prix || 0, devise || '$', periode || 'jour', ville || 'Lubumbashi', commune || '', quartier || '', telephone, statut || 'disponible', is_vip || false]
+      `INSERT INTO annonces (user_id, titre, description, prix, devise, ville, commune, quartier, telephone, statut, is_vip, univers, created_at)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, 'location', NOW()) RETURNING id`,
+      [user_id || null, titre, description, prix || 0, devise || '$', ville || 'Lubumbashi', commune || '', quartier || '', telephone, statut || 'disponible', is_vip || false]
     );
 
     const id = fields.rows[0].id;
@@ -211,8 +212,8 @@ app.post("/marketplace/annonces", annonceLimiter, async (req, res) => {
     }
 
     const result = await pool.query(
-      `INSERT INTO annonces (user_id, titre, description, prix, devise, periode, ville, commune, quartier, avenue, numero_parcelle, telephone, statut, is_vip, univers, etat_objet, created_at)
-       VALUES ($1, $2, $3, $4, $5, NULL, $6, $7, $8, $9, $10, $11, $12, FALSE, 'occasion', $13, NOW()) RETURNING id`,
+      `INSERT INTO annonces (user_id, titre, description, prix, devise, ville, commune, quartier, avenue, numero_parcelle, telephone, statut, is_vip, univers, etat_objet, created_at)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, FALSE, 'occasion', $13, NOW()) RETURNING id`,
       [
         user_id || null,
         String(titre || "").trim() || null,
@@ -287,7 +288,7 @@ app.delete("/marketplace/annonces/:id", async (req, res) => {
 
 app.put("/annonces/:id", async (req, res) => {
   try {
-    const { titre, prix, devise, periode, description, statut, ville, commune, telephone, nouvelles_images_base64 } = req.body;
+    const { titre, prix, devise, description, statut, ville, commune, telephone, nouvelles_images_base64 } = req.body;
 
     const violation = detecterMotsInterdits(titre, description);
     if (violation) {
@@ -298,8 +299,8 @@ app.put("/annonces/:id", async (req, res) => {
     }
 
     await pool.query(
-      `UPDATE annonces SET titre=$1, prix=$2, devise=$3, periode=$4, description=$5, statut=$6, ville=$7, commune=$8, telephone=$9 WHERE id=$10 AND univers='location'`,
-      [titre, prix, devise, periode, description, statut, ville, commune, telephone, req.params.id]
+      `UPDATE annonces SET titre=$1, prix=$2, devise=$3, description=$4, statut=$5, ville=$6, commune=$7, telephone=$8 WHERE id=$9 AND univers='location'`,
+      [titre, prix, devise, description, statut, ville, commune, telephone, req.params.id]
     );
 
     if (nouvelles_images_base64 && Array.isArray(nouvelles_images_base64)) {
