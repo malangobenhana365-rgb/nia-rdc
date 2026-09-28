@@ -198,7 +198,12 @@ app.post("/marketplace/annonces", annonceLimiter, async (req, res) => {
   try {
     const { user_id, titre, prix, devise, etat_objet, statut, telephone, description, ville, commune, quartier, avenue, numero_parcelle, images_base64 } = req.body;
 
-    if (!titre || !String(titre).trim()) return res.status(400).json({ error: "Le titre est obligatoire." });
+    const contact = String(telephone || "").trim();
+    const adresseRenseignee = [ville, commune, quartier, avenue, numero_parcelle]
+      .some((partie) => String(partie || "").trim());
+    if (!contact || !adresseRenseignee) {
+      return res.status(400).json({ error: "Le numéro de contact et l’adresse sont obligatoires." });
+    }
 
     const violation = detecterMotsInterdits(titre, description);
     if (violation && violation.type === "illegal") {
@@ -210,16 +215,16 @@ app.post("/marketplace/annonces", annonceLimiter, async (req, res) => {
        VALUES ($1, $2, $3, $4, $5, NULL, $6, $7, $8, $9, $10, $11, $12, FALSE, 'occasion', $13, NOW()) RETURNING id`,
       [
         user_id || null,
-        String(titre).trim(),
+        String(titre || "").trim() || null,
         description || '',
-        prix || 0,
+        prix ?? 0,
         devise || '$',
         ville || '',
         commune || '',
         quartier || '',
         avenue || '',
         numero_parcelle || '',
-        telephone || '',
+        contact,
         statut || 'disponible',
         etat_objet || 'Bon état'
       ]
@@ -478,4 +483,3 @@ app.get("/", (req, res) => res.sendFile(path.join(__dirname, "index.html")));
 
 const PORT = process.env.PORT || 5000;
 preparerUnivers().finally(() => app.listen(PORT, () => console.log(`Serveur opérationnel v2 sur le port ${PORT}`)));
-
