@@ -391,7 +391,8 @@ async function soumettreAnnonceOccasion() {
   const numeroParcelle = document.getElementById("occasion-numero-parcelle").value.trim();
   const files = document.getElementById("occasion-photos").files;
 
-  if (!titre || !prix || !telephone) return alert("Titre, prix et numéro de contact sont obligatoires.");
+  const adresseRenseignee = [ville, commune, quartier, avenue, numeroParcelle].some(Boolean);
+  if (!telephone || !adresseRenseignee) return alert("Le numéro de contact et l’adresse sont obligatoires.");
 
   const erreurContenu = verifierContenuInterdits(titre, description);
   if (erreurContenu) return alert("⛔ " + erreurContenu);
@@ -404,8 +405,8 @@ async function soumettreAnnonceOccasion() {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       user_id: localStorage.getItem("nia_user_id"),
-      titre,
-      prix: Number(prix),
+      titre: titre || null,
+      prix: prix === "" ? 0 : Number(prix),
       devise,
       etat_objet: etatObjet,
       statut,
@@ -1324,7 +1325,6 @@ window.supprimerAnnonceOccasion = supprimerAnnonceOccasion;
 window.ouvrirFenetreModificationAnnonceOccasion = ouvrirFenetreModificationAnnonceOccasion;
 window.sauvegarderChangementsAnnonceOccasion = sauvegarderChangementsAnnonceOccasion;
 window.setCurrentUniverseFromPreference = setCurrentUniverseFromPreference;
-
 
 
 
