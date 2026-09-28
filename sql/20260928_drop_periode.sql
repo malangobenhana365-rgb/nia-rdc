@@ -1,0 +1,5 @@
+BEGIN;
+
+ALTER TABLE annonces DROP COLUMN IF EXISTS periode;
+
+COMMIT;
