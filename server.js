@@ -87,6 +87,7 @@ async function preparerUnivers() {
     await pool.query(`ALTER TABLE annonces ADD COLUMN IF NOT EXISTS avenue TEXT`);
     await pool.query(`ALTER TABLE annonces ADD COLUMN IF NOT EXISTS numero_parcelle TEXT`);
     await pool.query(`ALTER TABLE annonces DROP COLUMN IF EXISTS periode`);
+    await pool.query(`ALTER TABLE annonces DROP CONSTRAINT IF EXISTS annonces_occasion_nos_periodes_check`);
     await pool.query(`CREATE INDEX IF NOT EXISTS annonces_univers_idx ON annonces(univers)`);
     console.log("✅ Séparation des univers prête.");
   } catch (error) {
