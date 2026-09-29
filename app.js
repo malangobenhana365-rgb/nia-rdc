@@ -430,7 +430,7 @@ async function chargerFluxPrincipal() {
     const res = await fetch(`${API}/feed`);
     toutesLesAnnonces = await res.json();
     if (currentUniverse === "location") renduFluxActif();
-    if (document.getElementById("admin-total-count")) document.getElementById("admin-total-count").textContent = toutesLesAnnonces.length;
+    actualiserStatistiquesAdmin();
   } catch (e) {
     document.getElementById("feed").innerHTML = "Erreur de synchronisation...";
   }
@@ -441,6 +441,7 @@ async function chargerFluxOccasion() {
     const res = await fetch(`${API}/marketplace/feed`);
     toutesLesAnnoncesOccasion = await res.json();
     if (currentUniverse === "occasion") renduFluxActif();
+    actualiserStatistiquesAdmin();
   } catch (e) {
     if (document.getElementById("feed")) document.getElementById("feed").innerHTML = "Erreur de synchronisation du marché d'occasion...";
   }
@@ -459,12 +460,30 @@ function renduFluxActif() {
 }
 
 function echapperHtml(texte = "") {
-  return texte
+  return String(texte)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/\"/g, "&quot;")
     .replace(/'/g, "&#39;");
+}
+
+function libelleUniversAdmin(annonce) {
+  return annonce.univers === "occasion" ? "♻️ Marché d’occasion" : "🏠 Location";
+}
+
+function renduDetailsAnnonceAdmin(annonce) {
+  const adresse = [annonce.ville, annonce.commune, annonce.quartier, annonce.avenue, annonce.numero_parcelle]
+    .filter(Boolean)
+    .map(echapperHtml)
+    .join(" • ");
+  const images = Array.isArray(annonce.images) ? annonce.images : [];
+  return `
+    <div style="color:#cbd5e1;">${annonce.univers === "occasion" ? `État de l’objet : ${echapperHtml(annonce.etat_objet || "Non renseigné")}<br>` : ""}Localisation : ${adresse || "Non renseignée"}</div>
+    <div style="color:#cbd5e1;">Prix : ${echapperHtml(annonce.prix || 0)} ${echapperHtml(annonce.devise || "")} | Statut : ${echapperHtml(annonce.statut || "Non renseigné")} | Contact : ${echapperHtml(annonce.telephone || "Non renseigné")}</div>
+    <div style="color:#cbd5e1; white-space:pre-wrap;">${echapperHtml(annonce.description || "Aucune description.")}</div>
+    ${images.length ? `<div style="display:flex;gap:6px;overflow-x:auto;">${images.map(image => `<img src="${echapperHtml(image.url || "")}" alt="Photo de l’annonce" style="width:72px;height:72px;object-fit:cover;border-radius:6px;">`).join("")}</div>` : ""}
+  `;
 }
 
 function basculerDescriptionComplete(element) {
@@ -1013,6 +1032,27 @@ async function envoyerMessageGlobalBroadcast() {
   }
 }
 
+function actualiserStatistiquesAdmin() {
+  const total = toutesLesAnnonces.length + toutesLesAnnoncesOccasion.length;
+  const totalElement = document.getElementById("admin-total-count");
+  const statsElement = document.getElementById("admin-universe-stats");
+  if (totalElement) totalElement.textContent = `Total général : ${total}`;
+  if (statsElement) {
+    statsElement.textContent = `Location : ${toutesLesAnnonces.length} • Marché d’occasion : ${toutesLesAnnoncesOccasion.length}`;
+  }
+}
+
+async function chargerAnnoncesAdmin() {
+  const [locationRes, occasionRes] = await Promise.all([
+    fetch(`${API}/feed`),
+    fetch(`${API}/marketplace/feed`)
+  ]);
+  const [location, occasion] = await Promise.all([locationRes.json(), occasionRes.json()]);
+  toutesLesAnnonces = Array.isArray(location) ? location : [];
+  toutesLesAnnoncesOccasion = Array.isArray(occasion) ? occasion : [];
+  actualiserStatistiquesAdmin();
+}
+
 function appliquerFiltresAdmin() {
   definirVueAdmin(VUE_ADMIN_ACTIVE);
 }
@@ -1023,10 +1063,18 @@ async function definirVueAdmin(mode) {
   if (!box) return;
   box.innerHTML = "Chargement...";
 
+  try {
+    await chargerAnnoncesAdmin();
+  } catch (e) {
+    actualiserStatistiquesAdmin();
+  }
+
+  const fUnivers = document.getElementById("admin-filter-universe").value;
   const fVille = document.getElementById("admin-filter-ville").value.toLowerCase().trim();
   const fType = document.getElementById("admin-filter-type").value;
 
-  let listeFiltree = toutesLesAnnonces.filter(a => {
+  let listeFiltree = [...toutesLesAnnonces, ...toutesLesAnnoncesOccasion].filter(a => {
+    if (fUnivers !== "all" && (a.univers || "location") !== fUnivers) return false;
     if (fVille && (!a.ville || !a.ville.toLowerCase().includes(fVille))) return false;
     if (fType === "standard" && a.is_vip) return false;
     if (fType === "vip" && !a.is_vip) return false;
@@ -1036,7 +1084,8 @@ async function definirVueAdmin(mode) {
   if (mode === "flux") {
     box.innerHTML = listeFiltree.map(a => `
       <div style="background:#1e293b; padding:10px; border-radius:8px; font-size:0.8rem; display:flex; flex-direction:column; gap:6px;">
-        <div><span style="color:#38bdf8; font-weight:700;">[${a.proprietaire_nup || 'SANS NUP'}]</span> <b>${echapperHtml(a.titre || '')}</b> (${a.is_vip ? '👑 VIP' : '📜 Stand.'}) à <i>${echapperHtml(a.ville || '')}</i></div>
+        <div><strong>${libelleUniversAdmin(a)}</strong> • <span style="color:#38bdf8; font-weight:700;">[${echapperHtml(a.proprietaire_nup || 'SANS NUP')}]</span> <b>${echapperHtml(a.titre || '')}</b> (${a.is_vip ? '👑 VIP' : '📜 Stand.'})</div>
+        ${renduDetailsAnnonceAdmin(a)}
         <div style="display:flex; gap:6px;">
           <input id="adm-input-${a.id}" placeholder="Message de modération..." style="flex:1; color:black; border-radius:6px; padding:6px; border:none; font-size:0.8rem;">
           <button onclick="envoyerMessageDepuisAdminAuNup(${a.id}, 'signale')" style="background:var(--success); color:white; border:none; border-radius:6px; padding:0 10px; font-weight:600;">Envoyer</button>
@@ -1047,11 +1096,13 @@ async function definirVueAdmin(mode) {
   } else if (mode === "signaux") {
     const res = await fetch(`${API}/admin/reports`);
     const data = await res.json();
-    if (data.length === 0) { box.innerHTML = "<p style='color:gray; font-size:0.8rem;'>Aucun signalement.</p>"; return; }
-    box.innerHTML = data.map(r => `
+    const signalementsFiltres = data.filter(r => fUnivers === "all" || (r.univers || "location") === fUnivers);
+    if (signalementsFiltres.length === 0) { box.innerHTML = "<p style='color:gray; font-size:0.8rem;'>Aucun signalement.</p>"; return; }
+    box.innerHTML = signalementsFiltres.map(r => `
       <div style="background:#1e293b; padding:10px; border-radius:8px; border-left:4px solid var(--danger); font-size:0.8rem; display:flex; flex-direction:column; gap:6px;">
-        <div style="color:#f87171; font-weight:700;">⚠️ MOTIF : "${r.raison}"</div>
-        <div style="color:#cbd5e1;">Cible : ${echapperHtml(r.titre)} | Propriétaire : <b>${r.proprietaire_nup || 'Inconnu'}</b></div>
+        <div style="color:#f87171; font-weight:700;">⚠️ MOTIF : "${echapperHtml(r.raison)}"</div>
+        <div><strong>${libelleUniversAdmin(r)}</strong> • <span style="color:#cbd5e1;">Cible : ${echapperHtml(r.titre)} | Propriétaire : <b>${echapperHtml(r.proprietaire_nup || 'Inconnu')}</b></span></div>
+        ${renduDetailsAnnonceAdmin(r)}
         <div style="display:flex; gap:6px;">
           <input id="adm-input-${r.id}" placeholder="Explication requise..." style="flex:1; color:black; border-radius:6px; padding:6px; border:none; font-size:0.8rem;">
           <button onclick="envoyerMessageDepuisAdminAuNup(${r.id}, 'signale')" style="background:#f59e0b; color:white; border:none; border-radius:6px; padding:0 10px; font-weight:600;">Exiger Justification</button>
@@ -1103,7 +1154,7 @@ async function envoyerMessageDepuisAdminAuNup(annonceId, ctx) {
 async function supprimerAnnonceParAdmin(id) {
   if (confirm("Retirer cette annonce du serveur ?")) {
     await fetch(`${API}/annonces/${id}/delete`, { method: "DELETE" });
-    chargerFluxPrincipal();
+    await Promise.all([chargerFluxPrincipal(), chargerFluxOccasion()]);
     setTimeout(() => definirVueAdmin(VUE_ADMIN_ACTIVE), 400);
   }
 }
@@ -1317,9 +1368,6 @@ window.supprimerAnnonceOccasion = supprimerAnnonceOccasion;
 window.ouvrirFenetreModificationAnnonceOccasion = ouvrirFenetreModificationAnnonceOccasion;
 window.sauvegarderChangementsAnnonceOccasion = sauvegarderChangementsAnnonceOccasion;
 window.setCurrentUniverseFromPreference = setCurrentUniverseFromPreference;
-
-
-
 
 
 
