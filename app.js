@@ -17,51 +17,106 @@ const TEXTES_DU_DROIT = {
 
 Bienvenue sur NIA RDC.
 
-Avant de créer un compte, veuillez lire les présentes conditions. En utilisant la plateforme, vous acceptez les règles suivantes.
+Avant de créer un compte ou d'utiliser la plateforme, veuillez lire les présentes conditions. En utilisant NIA RDC, vous acceptez les règles suivantes.
 
 1. Utilisation de la plateforme
 
-NIA RDC est une plateforme destinée à faciliter la publication et la consultation d'annonces de location, de services. Les utilisateurs s'engagent à utiliser la plateforme de manière honnête et conforme aux lois.
+NIA RDC est une plateforme destinée à faciliter la publication et la consultation d'annonces de location, de services et de vente d'objets d'occasion.
+Les utilisateurs s'engagent à utiliser la plateforme de manière honnête, responsable et conforme aux lois en vigueur.
 
 2. Exactitude des informations
 
-Chaque utilisateur est responsable des informations qu'il publie. Les annonces doivent être exactes et ne pas contenir d'informations trompeuses ou mensongères.
+Chaque utilisateur est responsable des informations qu'il publie.
+Les annonces doivent être exactes et ne pas contenir d'informations trompeuses ou mensongères.
+Les utilisateurs doivent notamment fournir des informations correctes concernant :
+les objets ou services proposés ;
+les prix ;
+l'état des objets ;
+la disponibilité ;
+les coordonnées et informations de localisation publiées.
 
 3. Protection du compte
 
 L'utilisateur est responsable de la confidentialité de son numéro de téléphone, de son mot de passe et des activités réalisées depuis son compte.
+L'utilisateur ne doit pas communiquer ses informations de connexion à une autre personne.
 
-4. Contenus interdits
+4. Contenus et activités interdits
 
-Il est interdit de publier des contenus contraires aux lois, frauduleux, trompeurs ou portant atteinte aux droits d'autrui.
+Il est interdit de publier ou de proposer :
+des contenus contraires aux lois en vigueur ;
+des biens ou services illégaux ;
+des annonces frauduleuses ou trompeuses ;
+des objets volés ;
+des produits interdits ou dangereux ;
+des contenus portant atteinte aux droits d'autrui ;
+des informations fausses ;
+des annonces utilisant l'identité d'une autre personne sans autorisation.
+NIA RDC se réserve le droit de supprimer tout contenu non conforme et de suspendre les comptes concernés.
 
 5. Photos et annonces
 
 L'utilisateur garantit qu'il possède les droits nécessaires sur les photos et les informations publiées.
+Il s'engage à publier des images correspondant réellement à l'objet, au bien ou au service présenté dans son annonce.
+L'utilisateur autorise l'affichage de ses annonces et contenus sur la plateforme.
 
-6. Protection des données
+6. Informations de localisation
 
-NIA RDC collecte uniquement les informations nécessaires au fonctionnement du service.
+Certaines annonces peuvent contenir des informations de localisation renseignées volontairement par l'utilisateur, notamment :
+ville ;
+commune ;
+quartier ;
+avenue ;
+numéro de parcelle.
+L'utilisateur est responsable des informations qu'il choisit de publier.
+Les personnes qui consultent ces informations doivent les utiliser uniquement dans le cadre légitime de la recherche, de la consultation ou de l'achat d'un bien ou service.
 
-7. Sécurité
+7. Sécurité des échanges
 
-NIA RDC met en œuvre des mesures techniques raisonnables pour protéger les données des utilisateurs.
+NIA RDC facilite la mise en relation entre utilisateurs, mais ne peut pas garantir le comportement ou les intentions de chaque utilisateur.
+Les utilisateurs doivent rester prudents lors de leurs échanges.
+Lors d'une rencontre physique, d'un achat, d'une vente ou d'une location, chaque utilisateur est responsable de prendre les précautions nécessaires.
+NIA RDC recommande notamment :
+de vérifier les informations de l'annonce ;
+de vérifier l'état d'un objet avant une transaction ;
+d'éviter les comportements suspects ;
+de ne pas communiquer inutilement des informations personnelles sensibles ;
+de rester prudent lors des rencontres avec des personnes inconnues.
 
-8. Responsabilité
+8. Transactions et responsabilité
 
-NIA RDC agit comme plateforme de mise en relation et n'est pas partie aux accords conclus entre les utilisateurs.
+NIA RDC agit comme une plateforme de mise en relation.
+NIA RDC n'est pas partie aux accords, ventes, locations ou autres transactions conclus entre les utilisateurs.
+Chaque utilisateur est responsable des décisions, transactions et échanges qu'il réalise avec d'autres utilisateurs.
+Les utilisateurs doivent vérifier eux-mêmes les informations, l'état des objets et les conditions des transactions avant de conclure un accord.
 
-9. Modération
+9. Protection des données
 
-NIA RDC peut suspendre ou supprimer un compte ou une annonce en cas de non-respect des présentes conditions.
+NIA RDC collecte les informations nécessaires au fonctionnement du service, notamment les informations de compte et les données liées aux annonces publiées.
+Le traitement des informations personnelles est expliqué dans la Politique de confidentialité de NIA RDC.
 
-10. Évolution des conditions
+10. Signalement et modération
 
-Ces conditions peuvent être mises à jour afin d'améliorer la plateforme.
+Les utilisateurs peuvent signaler les annonces ou comportements suspects.
+NIA RDC peut examiner les signalements et prendre les mesures nécessaires, notamment :
+supprimer une annonce ;
+limiter certaines fonctionnalités ;
+suspendre un compte ;
+supprimer un compte en cas de violation des présentes conditions.
+
+11. Sécurité
+
+NIA RDC met en œuvre des mesures techniques raisonnables pour protéger la plateforme et les données des utilisateurs.
+Toutefois, aucun système informatique ne peut garantir une sécurité absolue.
+Les utilisateurs doivent également contribuer à la sécurité de leur compte et de leurs échanges.
+
+12. Évolution des conditions
+
+Ces conditions peuvent être mises à jour afin de suivre l'évolution de NIA RDC, d'améliorer la sécurité de la plateforme ou de respecter les exigences légales.
+Les nouvelles conditions prendront effet dès leur publication sur la plateforme.
 
 Acceptation
 
-En créant un compte sur NIA RDC, je reconnais avoir lu les présentes conditions de sécurité et d'utilisation et j'accepte de les respecter.`,
+En créant un compte ou en utilisant NIA RDC, l'utilisateur reconnaît avoir lu les présentes Conditions de sécurité et d'utilisation et accepte de les respecter.`,
   apropos: `À propos de NIA RDC
 
 Bienvenue sur NIA RDC.
@@ -172,7 +227,7 @@ function ouvrirSecuriseAuth(inscription = true) {
   if (inscription) {
     const scroller = document.getElementById("cgu-scroller-node");
     if (scroller) {
-      scroller.innerHTML = TEXTES_DU_DROIT.securite;
+      scroller.textContent = TEXTES_DU_DROIT.securite;
       scroller.scrollTop = 0;
     }
     const chk = document.getElementById("chk-accept-rules");
@@ -1368,7 +1423,6 @@ window.supprimerAnnonceOccasion = supprimerAnnonceOccasion;
 window.ouvrirFenetreModificationAnnonceOccasion = ouvrirFenetreModificationAnnonceOccasion;
 window.sauvegarderChangementsAnnonceOccasion = sauvegarderChangementsAnnonceOccasion;
 window.setCurrentUniverseFromPreference = setCurrentUniverseFromPreference;
-
 
 
 
