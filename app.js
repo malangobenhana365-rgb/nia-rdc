@@ -117,27 +117,43 @@ Les nouvelles conditions prendront effet dès leur publication sur la plateforme
 Acceptation
 
 En créant un compte ou en utilisant NIA RDC, l'utilisateur reconnaît avoir lu les présentes Conditions de sécurité et d'utilisation et accepte de les respecter.`,
-  apropos: `À propos de NIA RDC
-
-Bienvenue sur NIA RDC.
-
-NIA RDC est une plateforme numérique conçue pour faciliter la mise en relation entre les personnes souhaitant louer, proposer ou rechercher des biens et des services en République Démocratique du Congo.
-
-Notre mission est de permettre à chacun de trouver ou de proposer des objets, équipements et services en toute simplicité, tout en favorisant les opportunités économiques locales.
-
+  apropos: `ℹ️ À propos de NIA RDC
+Bienvenue sur NIA RDC
+NIA RDC est une plateforme numérique conçue pour faciliter la mise en relation entre les personnes souhaitant louer, proposer, rechercher, acheter ou vendre des biens et des services en République Démocratique du Congo.
+Notre objectif est de rendre les échanges plus simples, rapides et accessibles grâce à une plateforme moderne et facile à utiliser.
+Nos univers
+🏠 Location
+Cet espace permet aux utilisateurs de consulter et publier des annonces concernant les biens, objets et services disponibles selon les fonctionnalités proposées par la plateforme.
+♻️ Marché d'occasion
+Cet espace permet aux utilisateurs de publier, consulter, acheter et vendre des objets d'occasion.
+Les utilisateurs peuvent présenter leurs objets avec des photos, un prix, une description et une localisation afin de faciliter les échanges directs entre vendeurs et acheteurs.
+Notre mission
+Notre mission est de permettre à chacun de trouver, proposer, louer, acheter ou vendre des biens et des services en toute simplicité, tout en favorisant les opportunités économiques locales.
 Ce que propose NIA RDC
-
 Les utilisateurs peuvent notamment :
-- publier des annonces ;
-- consulter les annonces disponibles ;
-- contacter les annonceurs ;
-- rechercher des biens et services selon leurs besoins.
-
+publier des annonces ;
+consulter les annonces disponibles ;
+rechercher des biens et services ;
+louer ou proposer des biens ;
+acheter ou vendre des objets d'occasion ;
+contacter les annonceurs ;
+consulter les informations et la localisation des annonces.
+La plateforme évolue régulièrement afin d'offrir de nouvelles fonctionnalités et une meilleure expérience utilisateur.
+Nos valeurs
+NIA RDC s'appuie sur plusieurs principes :
+simplicité ;
+accessibilité ;
+respect des utilisateurs ;
+innovation ;
+amélioration continue.
+Notre engagement
+Nous travaillons à maintenir une plateforme fiable et agréable à utiliser.
+Nous encourageons les utilisateurs à publier des informations exactes, à respecter les règles de la communauté et à proposer uniquement des biens, objets et services autorisés par la loi.
 Notre vision
-
-Nous souhaitons contribuer au développement des échanges et des services numériques en RDC.
-
-Merci de votre confiance.`,
+Nous souhaitons contribuer au développement des échanges et des services numériques en République Démocratique du Congo en proposant une plateforme moderne, accessible et évolutive.
+Contact
+Pour toute question ou suggestion, les utilisateurs peuvent contacter l'équipe de NIA RDC par les moyens de communication disponibles sur la plateforme.
+Merci de votre confiance et de votre participation au développement de NIA RDC.`,
   confidentialite: `Politique de confidentialité de NIA RDC
 
 Dernière mise à jour : Juin 2026.
