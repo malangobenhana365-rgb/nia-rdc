@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
   <title>NIA RDC</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="theme-color" content="#0b5ed7">
   <link rel="stylesheet" href="./style.css?v=20260916">
 </head>
 <body>
@@ -16,6 +18,7 @@
           <button onclick="afficherDocumentJurisEtSecu('apropos')">ℹ️ À propos de NIA RDC</button>
           <button onclick="afficherDocumentJurisEtSecu('confidentialite')">🔒 Confidentialité</button>
           <button onclick="ouvrirChoixUnivers()">🔄 Changer d’univers</button>
+          <button id="btn-install-app" onclick="telechargerApplication()">📲 Télécharger l’application</button>
           <button onclick="deconnexion()" style="color:var(--danger)">🚪 Se déconnecter</button>
           <button onclick="suppressionDefinitiveCompte()" style="color:var(--danger)">⚠️ Supprimer mon compte</button>
         </div>
@@ -55,6 +58,17 @@
         <p style="color:var(--text-light)">Accédez à l’espace qui correspond à votre besoin.</p>
         <button class="choice-btn location" onclick="switchUniverse('location')">🏠 Location</button>
         <button class="choice-btn occasion" onclick="switchUniverse('occasion')">♻️ Marché d’occasion</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-install">
+    <div class="modal-content" style="max-width:420px">
+      <div class="modal-header"><h3>📲 Installer NIA RDC</h3><button onclick="fermerModal('install')">✕</button></div>
+      <div class="universe-choice">
+        <p id="install-help" style="color:var(--text-light)">Installez l’application sur votre appareil pour y accéder plus rapidement.</p>
+        <button class="btn-auth full-width" id="btn-install-confirm" onclick="telechargerApplication()">Télécharger l’application</button>
+        <button class="btn-auth sec full-width" onclick="fermerModal('install')">Plus tard</button>
       </div>
     </div>
   </div>
