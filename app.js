@@ -1508,3 +1508,55 @@ window.setCurrentUniverseFromPreference = setCurrentUniverseFromPreference;
 
 
 
+
+let evenementInstallation = null;
+
+function estAppInstallee() {
+  return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+}
+
+function telechargerApplication() {
+  const aide = document.getElementById("install-help");
+  if (evenementInstallation) {
+    const evt = evenementInstallation;
+    evenementInstallation = null;
+    evt.prompt();
+    evt.userChoice.finally(() => fermerModal("install"));
+    return;
+  }
+  const iOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  if (aide) {
+    aide.textContent = iOS
+      ? "Sur iPhone/iPad : appuyez sur le bouton Partager puis « Sur l'écran d'accueil »."
+      : "Ouvrez le menu de votre navigateur puis choisissez « Installer l'application » ou « Ajouter à l'écran d'accueil ».";
+  }
+  ouvrirModal("install");
+}
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  evenementInstallation = e;
+});
+
+window.addEventListener("appinstalled", () => {
+  evenementInstallation = null;
+  localStorage.setItem("nia_install_prompted", "1");
+  const bouton = document.getElementById("btn-install-app");
+  if (bouton) bouton.style.display = "none";
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const bouton = document.getElementById("btn-install-app");
+  if (estAppInstallee()) {
+    if (bouton) bouton.style.display = "none";
+    return;
+  }
+  if (!localStorage.getItem("nia_install_prompted")) {
+    localStorage.setItem("nia_install_prompted", "1");
+    setTimeout(telechargerApplication, 1500);
+  }
+});
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(() => {}));
+}
